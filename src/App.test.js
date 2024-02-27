@@ -1,20 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import App from './App';
 
-test('renders learn react link', () => {
+test('getByRole test', () => {
   render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+  const colorButton = screen.getByRole("button", { name: "파란색으로 바뀜" });
 });
-
-test('should show login form', () => {
-  render(<App />)
-  const input = screen.getByLabelText('Username')
-  expect(input).toBeInTheDocument();
-})
-
-test('hello world', () => {
-  render(<App />)
-  const text = screen.getByText('Learn React')
-  expect(text).toBeInTheDocument();
-})
