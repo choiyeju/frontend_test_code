@@ -136,4 +136,104 @@
   ```javascript
   const aboutAnchorNode = screen.getByText(/about/i);
   ```
+
+### ByDisplayValue
+
+- API
+
+  ```javascript
+  getByDisplayValue(
+      // If you're using `screen`, then skip the container argument:
+      container: HTMLElement,
+      value: TextMatch,
+      options?: {
+      exact?: boolean = true,
+      normalizer?: NormalizerFn,
+    }): HTMLElement
+  ```
+
+  ```html
+  <input value="default-value">
+  ```
+
+- input의 form 요소(input, textarea, select)의 현재 값을 기준으로 요소를 찾습니다.
+
+  ```javascript
+  const aboutAnchorNode = screen.getByText(/about/i);
+  ```
+
+### ByAltText
+
+- API
+
+  ```javascript
+  getByAltText(
+      // If you're using `screen`, then skip the container argument:
+      container: HTMLElement,
+      text: TextMatch,
+      options?: {
+      exact?: boolean = true,
+      normalizer?: NormalizerFn,
+    }): HTMLElement
+  ```
+
+  ```html
+  <img src="image.png" alt="이미지 입니다.">
+  ```
+
+- alt 속성의 값으로 요소를 찾습니다.
+
+  ```javascript
+  const image = screen.getByAltText('이미지 입니다.');
+  ```
+
+### ByTitle
+
+- API
+
+  ```javascript
+  getByTitle(
+      // If you're using `screen`, then skip the container argument:
+      container: HTMLElement,
+      title: TextMatch,
+      options?: {
+      exact?: boolean = true,
+      normalizer?: NormalizerFn,
+    }): HTMLElement
+  ```
+
+  ```html
+  <div title="TIP">title은 툴팁으로 표시가 되고, 요소에 대한 정보를 나타내줍니다.</div>
+  ```
+
+- title 속성의 값으로 요소를 찾습니다.
+
+  ```javascript
+  const div = screen.getByTitle('TIP');
+  ```
+
+### ByTestId
+
+- API
+
+  ```javascript
+  getByTestId(
+      // If you're using `screen`, then skip the container argument:
+      container: HTMLElement,
+      text: TextMatch,
+      options?: {
+      exact?: boolean = true,
+      normalizer?: NormalizerFn,
+    }): HTMLElement
+  ```
+
+  ```html
+  <div data-testid="testid">Element</div>
+  ```
+
+- 요소에 testid 속성값을 부여해서 요소를 찾는 방법입니다.
+
+  ```javascript
+  const div = screen.getByTestId('testid');
+  ```
   

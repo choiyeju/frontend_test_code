@@ -23,6 +23,15 @@ function App() {
 
             {/* ByText */}
             <a href="/about">About ℹ️</a>
+
+            {/* ByDisplayValue */}
+            <input value="default-value"/>
+
+            {/* getByTitle */}
+            <div title="TIP">title은 툴팁으로 표시가 되고, 요소에 대한 정보를 나타내줍니다.</div>
+
+            {/* getByTestId */}
+            <div data-testid="testid">Element</div>
         </div>
     );
 }

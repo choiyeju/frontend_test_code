@@ -20,3 +20,18 @@ test('ByText test', () => {
   render(<App />);
   const aboutAnchorNode = screen.getByText(/about/i);
 });
+
+test('ByDisplayValue test', () => {
+  render(<App />);
+  const input = screen.getByDisplayValue('default-value');
+});
+
+test('getByTitle test', () => {
+  render(<App />);
+  const div = screen.getByTitle('TIP');
+});
+
+test('getByTestId test', () => {
+  render(<App />);
+  const div = screen.getByTestId('testid');
+});
