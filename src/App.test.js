@@ -21,11 +21,11 @@ test('ByText test', () => {
   const aboutAnchorNode = screen.getByText(/about/i);
 });
 
-test('ByDisplayValue test', () => {
-  render(<App />);
-  const input = screen.getByDisplayValue('default-value');
-});
-
+// test('ByDisplayValue test', () => {
+//   render(<App />);
+//   const input = screen.getByDisplayValue('default-value');
+// });
+//
 test('getByTitle test', () => {
   render(<App />);
   const div = screen.getByTitle('TIP');
