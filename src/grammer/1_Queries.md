@@ -74,7 +74,7 @@
     }): HTMLElement
   ```
 
-- label의 텍스트 값, label과 연결된 input 태그를 찾아줌
+- label의 텍스트 값, label과 연결된 input 태그를 찾아줍니다.
 
   ```html
   <label htmlFor="username-input">Username</label>
@@ -84,3 +84,56 @@
   ```javascript
   const inputNode = screen.getByLabelText('Username', {selector: 'input'});
   ```
+
+### ByPlaceholderText
+
+- API
+
+  ```javascript
+  getByPlaceholderText(
+      // If you're using `screen`, then skip the container argument:
+      container: HTMLElement,
+      text: TextMatch,
+      options?: {
+      exact?: boolean = true,
+      normalizer?: NormalizerFn,
+    }): HTMLElement
+  ```
+
+- placeholder 값으로 input 또는 textarea를 찾습니다.
+
+  ```html
+  <input placeholder="Username"/>
+  ```
+
+  ```javascript
+  const inputNode = screen.getByPlaceholderText('Username');
+  ```
+
+### ByText
+
+- API
+
+  ```javascript
+  getByText(
+      // If you're using `screen`, then skip the container argument:
+      container: HTMLElement,
+      text: TextMatch,
+      options?: {
+      selector?: string = '*',
+      exact?: boolean = true,
+      ignore?: string|boolean = 'script, style',
+      normalizer?: NormalizerFn,
+    }): HTMLElement
+  ```
+
+  ```html
+  <a href="/about">About ℹ️</a>
+  ```
+
+- 요소가 가진 text 값으로 요소를 찾습니다.
+
+  ```javascript
+  const aboutAnchorNode = screen.getByText(/about/i);
+  ```
+  
