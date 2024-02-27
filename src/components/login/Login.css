@@ -1,0 +1,18 @@
+.login_box {
+    max-width: 1000px;
+    height: 500px;
+    margin: auto;
+    padding: 0 20px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    border: 1px solid #000;
+}
+
+.login_box p {
+    text-align: left;
+}
+.login_box h6 {
+    margin: 0;
+}
