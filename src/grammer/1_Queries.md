@@ -12,7 +12,6 @@
 ### ByRole
 
 - API
-<br/>
 
   ```javascript
   getByRole(
@@ -42,7 +41,6 @@
   ```
 
 - 테스트에서 특정 역할을 가진 요소를 가져오는 메서드 입니다.
-<br/>
 
     ```html
     <button role="button" onClick={onClick}>
@@ -57,14 +55,12 @@
     ```
 
 - 자주 사용되는 role
-<br/>
 
         button, checkbox, combobox, listbox, link, heading, textbox, menu, progressbar, radio, slider, spinbutton, table
 
 ### ByLabelText
 
 - API
-<br/>
 
   ```javascript
   getByLabelText(
@@ -79,7 +75,6 @@
   ```
 
 - label의 텍스트 값, label과 연결된 input 태그를 찾아줌
-<br/>
 
   ```html
   <label htmlFor="username-input">Username</label>
