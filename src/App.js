@@ -1,3 +1,4 @@
+import Login from "./components/login/Login";
 import './App.css';
 
 function App() {
@@ -30,6 +31,8 @@ function App() {
 
             {/* getByTestId */}
             <div data-testid="testid">Element</div>
+
+            <Login/>
         </div>
     );
 }
