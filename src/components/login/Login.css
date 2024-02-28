@@ -12,6 +12,8 @@
 
 .login_box p {
     text-align: left;
+    display: flex;
+    flex-direction: column;
 }
 .login_box h6 {
     margin: 0;
