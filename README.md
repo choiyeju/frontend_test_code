@@ -62,41 +62,7 @@ fireEvent.click(button);
 
 <br />
 
-## 정적 컴포넌트 테스팅
-
-```javascript
-function NotFound({ path }) {
-  return (
-    <>
-      <h2>Page Not Found</h2>
-      <p>해당 페이지({path})를 찾을 수 없습니다.</p>
-      <img
-        alt="404"
-        src="https://media.giphy.com/media/14uQ3cOFteDaU/giphy.gif"
-      />
-    </>
-  );
-}
-```
-
-```javascript
-import { render, screen } from "@testing-library/react";
-import { NotFound } from "./NotFound";
-
-describe("<NotFound />", () => {
-  it("renders header", () => {
-    render(<NotFound path="/abc" />);
-    const heading = screen.getByRole("heading", {
-      name: "Page Not Found",
-    });
-    expect(heading).toBeInTheDocument();
-  });
-});
-```
-
-<br />
-
-## 동적 컴포넌트 테스팅
+## 예제
 
 ```javascript
 import React from "react";
