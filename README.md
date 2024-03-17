@@ -1,67 +1,168 @@
-## 프론트엔드 테스트
+## Jest
 
-1. Static Test
-    - 코드를 실행시키지 않고 테스트 하는 것.
-    - ESLint를 통해 console에 warn옵션을 주어 경고 표시하여 커밋할 때 같이 커밋하지 않도록 합니다.
-   <br/>
-   
-   ```javascript
-    const a = 1;
-    const b = 2;
-    
-    function sum(a, b) {
-     return a + b;
-    }
-    
-    const test = sum(a, b);
-    
-    console.log(test);
+자바스크립트 코드에 대한 테스트를 실행할 수 있도록 하는 test runner 입니다.
+
+테스트를 찾아 실행하고 테스트가 통과하는지 검사합니다.
+
+## Testing Library
+
+컴포넌트 테스트를 한다는 점에서 jest와 차이점이 있습니다.
+
+때문에 웹 브라우저 없이도 app을 렌더할 수 있고 UI가 올바르게 작동하는지 관찰할 수 있습니다.
+
+<br />
+
+## 설치 및 설정 방법
+
+#### 설치
+
+```
+$ npm install -D @testing-library/jest-dom
+$ npm install -D @testing-library/react
+$ npm install -D @testing-library/user-event
+```
+
+#### 설정
+
+1. 다음 테스트를 위해 끝난 테스트 삭제 작업
+
+   ```
+   import "@testing-library/react/cleanup-after-each";
+   import "@testing-library/jest-dom/extend-expect";
    ```
 
-2. Unit Test
-   - 단위 테스트, 최소 단위의 유틸 함수, 커스텀 훅, 하나의 컴포넌트 등을 테스트 합니다.
-   <br/>
+2. matcher를 jest 테스트 러너에 인식시키는 작업
 
-   ```javascript
-    test('sum fn', () => {
-     const result = mySum(10, 20);
-     expect(result).toBe(30);
+   ```
+   import "@testing-library/jest-dom/vitest";
+   import { cleanup } from "@testing-library/react";
+   import { afterEach } from "vitest";
+
+   afterEach(cleanup);
+   ```
+
+<br />
+
+## 주요 API
+
+| 함수      | 내용                                     |
+| --------- | ---------------------------------------- |
+| render    | 컴포넌트 렌더링 해주는 함수              |
+| screen    | 특정 영역을 선택하기 위해 쿼리 함수 제공 |
+| fireEvent | 특정 이벤트 발생                         |
+
+```javascript
+import { render, screen fireEvent } from "@testing-library/react";
+
+render(<TestComponent />);
+
+const button = screen.getByText(/click me/i);
+fireEvent.click(button);
+```
+
+<br />
+
+## 정적 컴포넌트 테스팅
+
+```javascript
+function NotFound({ path }) {
+  return (
+    <>
+      <h2>Page Not Found</h2>
+      <p>해당 페이지({path})를 찾을 수 없습니다.</p>
+      <img
+        alt="404"
+        src="https://media.giphy.com/media/14uQ3cOFteDaU/giphy.gif"
+      />
+    </>
+  );
+}
+```
+
+```javascript
+import { render, screen } from "@testing-library/react";
+import { NotFound } from "./NotFound";
+
+describe("<NotFound />", () => {
+  it("renders header", () => {
+    render(<NotFound path="/abc" />);
+    const heading = screen.getByRole("heading", {
+      name: "Page Not Found",
     });
-   ```
+    expect(heading).toBeInTheDocument();
+  });
+});
+```
 
-   ```javascript
-    test('button disabled', () => {
-     render(<MyButton />)
-     fireEvent.click(screen.getByText('click'));
-     expect(screen.getByRole('button')).toBeDisabled();
+<br />
+
+## 동적 컴포넌트 테스팅
+
+```javascript
+import React from "react";
+
+function LoginForm({ onSubmit }) {
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
+
+  return (
+    <>
+      <h2>Login</h2>
+      <form onSubmit={() => onSubmit()}>
+        <label>
+          이메일
+          <input
+            type="email"
+            placeholder="user@test.com"
+            value={email}
+            onChange={({ target: { value } }) => setEmail(value)}
+          />
+        </label>
+        <label>
+          비밀번호
+          <input
+            type="password"
+            value={password}
+            onChange={({ target: { value } }) => setPassword(value)}
+          />
+        </label>
+        <button disabled={!email || !password}>로그인</button>
+      </form>
+    </>
+  );
+}
+```
+
+```javascript
+import React from "react";
+import { render, fireEvent } from "@testing-library/react";
+import LoginForm from "./LoginForm";
+
+describe("<LoginForm />", () => {
+  it("submits form when button is clicked", () => {
+    const obSubmit = jest.fn();
+    render(<LoginForm onSubmit={obSubmit} />);
+
+    const button = screen.getByRole("button", {
+      name: /로그인/i,
     });
-   ```
+    expect(button).toBeDisabled();
 
-3. Integration Test
-   - 통합 테스트는 두 개 이상의 모듈을 연결하여 테스트 합니다.
-   <br/>
+    const email = screen.getByRole("textbox", {
+      name: /이메일/i,
+    });
+    const password = screen.getByLabelText(/비밀번호/i);
 
-   ```javascript
-    const server = setupServer(
-      rest.get('/greeting', (req, res, ctx) => {
-        return res(ctx.json({greeting: '안녕하세요'}))
-      }),
-    )
-    
-    beforeAll(() => server.listen())
-    afterEach(() => server.resetHandlers())
-    afterAll(() => server.close())
-    
-    test('loads and displays greeting', async () => {
-      render(<MyComponent url="/greeting" />)
-    
-      fireEvent.click(screen.getByText('Greeting'))
-    
-      await waitFor(() => screen.getByRole('heading'))
-    
-      expect(screen.getByRole('heading')).toHaveTextContent('안녕')
-    })
-   ```
+    fireEvent.change(email, { target: { value: "user@test.com" } });
+    fireEvent.change(password, { target: { value: "Test1234" } });
 
-4. E2E Test
-    - 실제 사용자 관점에서 시뮬레이션 하는 테스트 입니다.
+    expect(button).toBeEnabled();
+    fireEvent.click(button);
+
+    expect(obSubmit).toHaveBeenCalledTimes(1);
+    expect(obSubmit).toHaveBeenCalledWith();
+  });
+});
+```
+
+![test_image](./test-image.png)
